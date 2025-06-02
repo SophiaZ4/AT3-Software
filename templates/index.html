@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Template</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="manifest" href="/manifest.json"> {# Served by app.py route #}
+    <meta name="theme-color" content="#000000"/>
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/icon.jpeg') }}" />
+</head>
+<body>
+    <h1>PWA Template</h1>
+    <p>This is my simple PWA template.</p>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
