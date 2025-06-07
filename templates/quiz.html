@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyNetball PWA</title>
+    <title>Quiz - MyNetball PWA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="manifest" href="/manifest.json"> {# Served by app.py route #}
-    <meta name="theme-color" content="#000000"/>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}" />
 </head>
 <body>
     <header class="main-header">
@@ -22,9 +19,7 @@
             </ul>
         </nav>
     </header>
-    
-    <h1>MyNetball PWA</h1>
-    <p>This is my simple PWA template.</p>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <h1>Netball Quiz</h1>
+    <p>This is where the interactive quiz will be.</p>
 </body>
 </html>

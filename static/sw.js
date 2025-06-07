@@ -1,12 +1,13 @@
 const CACHE_NAME = 'my-flask-pwa-cache-v1';
 const urlsToCache = [
-  '/',                            // Main page served by Flask
-  '/manifest.json',               // Served by the /manifest.json route
-  '/sw.js',                       // This service worker file, served by /sw.js route
+  '/',
+  '/rules', // Add the new route
+  '/quiz',  // Add the new route
+  '/manifest.json',
+  '/sw.js',
   '/static/style.css',
   '/static/app.js',
-  '/static/images/icon.jpeh' // Path to icon
-  // Add other static assets app shell needs
+  '/static/images/icon.png'
 ];
 
 // Install event: cache core assets

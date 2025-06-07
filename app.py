@@ -7,6 +7,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/rules')
+def rules():
+    return render_template('rules.html')
+
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
+
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('static', 'manifest.json')
@@ -14,12 +22,6 @@ def manifest():
 @app.route('/sw.js')
 def service_worker():
     return send_from_directory('static', 'sw.js')
-
-# If you want to serve other static files from the root, you can add them here
-# For example, if you have an icon at static/images/icon.png and want to serve it from /icon.png
-# @app.route('/icon.png')
-# def icon():
-#     return send_from_directory('static/images', 'icon.png')
 
 if __name__ == '__main__':
     app.run(debug=True)
