@@ -49,3 +49,63 @@ p {
 .nav-links a:hover {
     color: #0056b3;
 }
+
+.content-container {
+    max-width: 900px;
+    margin: 40px auto; /* Center the content and add space from header */
+    padding: 0 20px;
+}
+
+.rule-section {
+    margin-bottom: 50px; /* Space between rule sections */
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+}
+
+.rule-section:last-child {
+    border-bottom: none;
+}
+
+.rule-image,
+.rule-video {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #eee; /* Shows a placeholder color while video loads */
+}
+
+
+/* For the footwork video */
+.footwork-video-position {
+    object-position: 100%; /* or try '50% 100%' */
+}
+
+/* For the contact image */
+.contact-image-position {
+    object-position: bottom center; /* or try '100% 100%' */
+}
+
+.rule-section h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.rule-section h3 {
+    color: #555;
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+
+.rule-section p, .rule-section li {
+    line-height: 1.6;
+    color: #444;
+}
+
+.rule-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+

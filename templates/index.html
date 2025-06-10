@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyNetball PWA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="manifest" href="/manifest.json"> {# Served by app.py route #}
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#000000"/>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}" />
 </head>
@@ -22,9 +22,51 @@
             </ul>
         </nav>
     </header>
-    
-    <h1>MyNetball PWA</h1>
-    <p>This is my simple PWA template.</p>
+
+    <main class="content-container">
+        <h1>Welcome to MyNetball</h1>
+        <p>Your go-to app for understanding the essential rules of netball. Get started below with some of the fundamental rules in the game!</p>
+
+        <section id="footwork-rules" class="rule-section">
+            <h2>Stepping and Footwork</h2>
+            
+            <!-- update video to have audio - rescreen record (link in logbook) with audio and then reconvert to mp4 and crop using restream.io -->
+            <video class="rule-video" autoplay loop muted controls>
+                <source src="{{ url_for('static', filename='images/step.mp4') }}" type="video/mp4">
+                Video of player catching ball. Your browser does not support the video tag.
+            </video>
+            <p>The footwork rule is one of the most important concepts to master in netball. Unlike basketball, you cannot run or dribble with the ball. Once you catch the ball, you must stop and establish a landing foot.</p>
+            <ul>
+                <li><strong>Landing on one foot:</strong> If you land on one foot, that foot becomes your landing foot and must stay grounded. You can pivot on that foot, but it cannot be lifted and re-grounded. You must pass or shoot before your landing foot returns to the ground.</li>
+                <li><strong>Landing on two feet:</strong> If you land on both feet simultaneously, you can choose either foot to be your landing foot. Once you move one foot, the other immediately becomes your landing foot.</li>
+                <li>A player can jump from the landing foot to pass or shoot, but must release the ball before landing on the ground again.</li>
+            </ul>
+        </section>
+
+        <section id="contact-rules" class="rule-section">
+            <h2>Contact and Obstruction</h2>
+            <img src="{{ url_for('static', filename='images/dist.png') }}" alt="A netball defender with arms up, correctly positioned 3 feet from the attacker." class="rule-image">
+            <p>Netball is a non-contact sport. The rules are designed to ensure fair play and prevent injuries by strictly controlling how players can interact physically.</p>
+            
+            <h3>Contact</h3>
+            <p>A player cannot make physical contact with an opponent in a way that impedes their play. This includes:</p>
+            <ul>
+                <li>Pushing, tripping, holding, or leaning on another player.</li>
+                <li>Charging into an opponent or moving into their path to cause a collision.</li>
+                <li>Using the ball to push an opponent away.</li>
+            </ul>
+
+            <h3>Obstruction</h3>
+            <p>When defending a player who has the ball, you must stand a specific distance away. This is called obstruction.</p>
+            <ul>
+                <li>The minimum distance for a defender is <strong>3 feet (0.9 metres)</strong>. This is measured from the opponent's landing foot.</li>
+                <li>You can only attempt to intercept the ball or defend the player once you are at the correct 3-foot distance.</li>
+                <li>Putting your arms up to block from too close will result in an obstruction penalty.</li>
+            </ul>
+        </section>
+
+    </main>
+
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
