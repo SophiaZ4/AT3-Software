@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-flask-pwa-cache-v2';
+const CACHE_NAME = 'my-flask-pwa-cache-v7';
 const urlsToCache = [
   '/',
   '/rules', // Add the new route
