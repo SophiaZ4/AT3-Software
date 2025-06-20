@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MyNetball PWA{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}" />
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="MyNetball Logo" class="logo">
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/rules">Positions</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                </ul>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

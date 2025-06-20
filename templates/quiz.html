@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - MyNetball PWA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header class="main-header">
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="MyNetball Logo" class="logo">
-        </div>
-        <nav class="main-nav">
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/rules">Positions</a></li>
-                <li><a href="/quiz">Quiz</a></li>
-            </ul>
-        </nav>
-    </header>
+{% extends "base.html" %}
+
+{% block title %}Quiz - MyNetball PWA{% endblock %}
+
+{% block content %}
     <h1>Netball Quiz</h1>
     <p>This is where the interactive quiz will be.</p>
-</body>
-</html>
+{% endblock %}

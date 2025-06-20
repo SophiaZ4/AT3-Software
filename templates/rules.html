@@ -1,97 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Positions - MyNetball PWA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header class="main-header">
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="MyNetball Logo" class="logo">
-        </div>
-        <nav class="main-nav">
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/rules">Positions</a></li>
-                <li><a href="/quiz">Quiz</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="content-container">
-        <h1>Netball Positions</h1>
-        <section class="rule-section">
-            <p>Here is an explaination of the positions of each player in Netball.</p>
-            <ul>
-                <li>There are two teams of 7 players on the court at a time.</li>
-                <li>This diagram shows the players on one team.</li>
-            </ul>
-        </section>
+{% extends "base.html" %}
 
-        <div class="position-buttons">
-            <button data-position="GS">Goal Shooter (GS)</button>
-            <button data-position="GA">Goal Attack (GA)</button>
-            <button data-position="WA">Wing Attack (WA)</button>
-            <button data-position="C">Centre (C)</button>
-            <button data-position="WD">Wing Defence (WD)</button>
-            <button data-position="GD">Goal Defence (GD)</button>
-            <button data-position="GK">Goal Keeper (GK)</button>
-        </div>
-        
-        <div id="position-info-panel" class="info-panel-hidden">
-            <button id="info-panel-close">X</button>
-            <h3 id="info-panel-title"></h3>
-            <p id="info-panel-description"></p>
-        </div>
+{% block title %}Positions - MyNetball PWA{% endblock %}
 
-        <svg
-            id="netball-court"
-            class="rule-image"
-            viewBox="0 0 610 305"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg">
+{% block content %}
 
-            <defs>
-                <mask id="mask-a-hole">
-                    <rect width="100%" height="100%" fill="white"/>
-                    <path d="M 1,53.5 a 99,99 0 0 1 99,99 a 99,99 0 0 1 -99,99" fill="black" />
-                </mask>
-                <mask id="mask-b-hole">
-                    <rect width="100%" height="100%" fill="white"/>
-                    <path d="M 609,53.5 a 99,99 0 0 0 -99,99 a 99,99 0 0 0 99,99" fill="black" />
-                </mask>
-            </defs>
+<main class="content-container">
+    <h1>Netball Positions</h1>
+    <section class="rule-section">
+        <p>Here is an explaination of the positions of each player in Netball.</p>
+        <ul>
+            <li>There are two teams of 7 players on the court at a time.</li>
+            <li>This diagram shows the players on one team.</li>
+        </ul>
+    </section>
 
-            <style>
-                .court-outline { fill: none; stroke: #000; stroke-width: 2; }
-                .court-area { fill: #fff; stroke: #000; stroke-width: 1; }
-                .court-text { font-family: sans-serif; font-size: 14px; text-anchor: middle; fill: #000; }
-            </style>
+    <div class="position-buttons">
+        <button data-position="GS">Goal Shooter (GS)</button>
+        <button data-position="GA">Goal Attack (GA)</button>
+        <button data-position="WA">Wing Attack (WA)</button>
+        <button data-position="C">Centre (C)</button>
+        <button data-position="WD">Wing Defence (WD)</button>
+        <button data-position="GD">Goal Defence (GD)</button>
+        <button data-position="GK">Goal Keeper (GK)</button>
+    </div>
+    
+    <div id="position-info-panel" class="info-panel-hidden">
+        <button id="info-panel-close">X</button>
+        <h3 id="info-panel-title"></h3>
+        <p id="info-panel-description"></p>
+    </div>
 
-            <g id="court-zones">
-                <rect id="goal-third-a" class="court-area" x="1" y="1" width="203.3" height="303" mask="url(#mask-a-hole)"/>
-                <rect id="centre-third" class="court-area" x="204.3" y="1" width="201.4" height="303" />
-                <rect id="goal-third-b" class="court-area" x="405.7" y="1" width="203.3" height="303" mask="url(#mask-b-hole)"/>
+    <svg
+        id="netball-court"
+        class="rule-image"
+        viewBox="0 0 610 305"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
 
-                <path id="goal-circle-a" class="court-area" d="M 1,53.5 a 99,99 0 0 1 99,99 a 99,99 0 0 1 -99,99" style="stroke-width:1; fill:none;" />
-                <path id="goal-circle-b" class="court-area" d="M 609,53.5 a 99,99 0 0 0 -99,99 a 99,99 0 0 0 99,99" style="stroke-width:1; fill:none;" />
-                <circle id="centre-circle" class="court-area" cx="305" cy="152.5" r="9" style="stroke-width:1; fill:none;" />
-            </g>
+        <defs>
+            <mask id="mask-a-hole">
+                <rect width="100%" height="100%" fill="white"/>
+                <path d="M 1,53.5 a 99,99 0 0 1 99,99 a 99,99 0 0 1 -99,99" fill="black" />
+            </mask>
+            <mask id="mask-b-hole">
+                <rect width="100%" height="100%" fill="white"/>
+                <path d="M 609,53.5 a 99,99 0 0 0 -99,99 a 99,99 0 0 0 99,99" fill="black" />
+            </mask>
+        </defs>
 
-            <g id="court-visuals">
-                <rect class="court-outline" x="1" y="1" width="608" height="303" />
-                <line x1="204.3" y1="1" x2="204.3" y2="304" stroke="#000" stroke-width="2" />
-                <line x1="405.7" y1="1" x2="405.7" y2="304" stroke="#000" stroke-width="2" />
-                <text x="102" y="40" class="court-text">Goal Third</text>
-                <text x="508" y="40" class="court-text">Goal Third</text>
-                <text x="305" y="40" class="court-text">Centre Third</text>
-                <text x="55" y="157.5" class="court-text">Goal Circle</text>
-                <text x="555" y="157.5" class="court-text">Goal Circle</text>
-            </g>
-        </svg>
+        <style>
+            .court-outline { fill: none; stroke: #000; stroke-width: 2; }
+            .court-area { fill: #fff; stroke: #000; stroke-width: 1; }
+            .court-text { font-family: sans-serif; font-size: 14px; text-anchor: middle; fill: #000; }
+        </style>
 
-        <script src="{{ url_for('static', filename='js/rules.js') }}"></script>
-    </main>
-</body>
-</html>
+        <g id="court-zones">
+            <rect id="goal-third-a" class="court-area" x="1" y="1" width="203.3" height="303" mask="url(#mask-a-hole)"/>
+            <rect id="centre-third" class="court-area" x="204.3" y="1" width="201.4" height="303" />
+            <rect id="goal-third-b" class="court-area" x="405.7" y="1" width="203.3" height="303" mask="url(#mask-b-hole)"/>
+
+            <path id="goal-circle-a" class="court-area" d="M 1,53.5 a 99,99 0 0 1 99,99 a 99,99 0 0 1 -99,99" style="stroke-width:1; fill:none;" />
+            <path id="goal-circle-b" class="court-area" d="M 609,53.5 a 99,99 0 0 0 -99,99 a 99,99 0 0 0 99,99" style="stroke-width:1; fill:none;" />
+            <circle id="centre-circle" class="court-area" cx="305" cy="152.5" r="9" style="stroke-width:1; fill:none;" />
+        </g>
+
+        <g id="court-visuals">
+            <rect class="court-outline" x="1" y="1" width="608" height="303" />
+            <line x1="204.3" y1="1" x2="204.3" y2="304" stroke="#000" stroke-width="2" />
+            <line x1="405.7" y1="1" x2="405.7" y2="304" stroke="#000" stroke-width="2" />
+            <text x="102" y="40" class="court-text">Goal Third</text>
+            <text x="508" y="40" class="court-text">Goal Third</text>
+            <text x="305" y="40" class="court-text">Centre Third</text>
+            <text x="55" y="157.5" class="court-text">Goal Circle</text>
+            <text x="555" y="157.5" class="court-text">Goal Circle</text>
+        </g>
+    </svg>
+
+    <script src="{{ url_for('static', filename='js/rules.js') }}"></script>
+</main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/rules.js') }}"></script>
+{% endblock %}

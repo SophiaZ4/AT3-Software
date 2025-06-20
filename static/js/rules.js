@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const positionData = {
         'GS': {
             name: 'Goal Shooter',
-            description: 'The Goal Shooter\'s main role is to score goals. They are the only player allowed in the opposition\'s goal circle along with the Goal Attack.',
+            description: 'The Goal Shooter\'s main role is to score goals. They are the only player allowed in the team\'s goal circle along with the Goal Attack.',
             areas: ['goal-third-b', 'goal-circle-b']
         },
         'GA': {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'GK': {
             name: 'Goal Keeper',
-            description: 'The Goal Keeper is the last line of defence. Their primary role is to prevent the Goal Shooter from scoring and to rebound missed shots. They stay within the defensive third.',
+            description: 'The Goal Keeper is the last line of defence. Their primary role is to prevent the Goal Shooter from scoring and to rebound missed shots. They stay within the defensive goal third.',
             areas: ['goal-third-a', 'goal-circle-a']
         }
     };
