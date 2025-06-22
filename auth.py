@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
+import bleach
 from . import db
 from .models import User, Question, Choice
 
@@ -29,7 +30,7 @@ def register():
         return redirect(url_for('index'))
     
     if request.method == 'POST':
-        username = request.form.get('username')
+        username = bleach.clean(request.form.get('username'))
         password = request.form.get('password')
         existing_user = User.query.filter_by(username=username).first()
 
@@ -76,8 +77,8 @@ def add_question():
         return redirect(url_for('auth.admin_dashboard'))
 
     if request.method == 'POST':
-        question_text = request.form.get('question_text')
-        choices_text = request.form.getlist('choices') # Gets a list of all choice inputs
+        question_text = bleach.clean(request.form.get('question_text'))
+        choices_text = [bleach.clean(text) for text in request.form.getlist('choices')] # Gets a list of all choice inputs
         correct_choice_index = int(request.form.get('correct_choice')) - 1 # (1-4) -> (0-3)
 
         if not question_text or len(choices_text) != 4 or '' in choices_text:
@@ -110,12 +111,12 @@ def edit_question(question_id):
     question = Question.query.get_or_404(question_id)
 
     if request.method == 'POST':
-        question.text = request.form.get('question_text')
+        question.text = bleach.clean(request.form.get('question_text'))
         correct_choice_id = int(request.form.get('correct_choice_id'))
 
         # Update each choice
         for choice in question.choices:
-            choice.text = request.form.get(f'choice_text_{choice.id}')
+            choice.text = bleach.clean(request.form.get(f'choice_text_{choice.id}'))
             choice.is_correct = (choice.id == correct_choice_id)
             
         db.session.commit()

@@ -8,7 +8,7 @@
 
             <div class="form-group">
                 <label for="question_text">Question Text</label>
-                <textarea class="form-control" id="question_text" name="question_text" rows="3" required>{{ question.text }}</textarea>
+                <textarea class="form-control" id="question_text" name="question_text" rows="3" required pattern="[^<>]*" title="Special characters not allowed.">{{ question.text }}</textarea>
             </div>
 
             <hr class="my-4">
@@ -19,7 +19,7 @@
             <div class="form-group choice-input-group">
                 <input type="radio" name="correct_choice_id" value="{{ choice.id }}" {% if choice.is_correct %}checked{% endif %} required>
                 <label for="choice_{{ choice.id }}">Choice Text</label>
-                <input type="text" id="choice_{{ choice.id }}" name="choice_text_{{ choice.id }}" class="form-control" value="{{ choice.text }}" required>
+                <input type="text" id="choice_{{ choice.id }}" name="choice_text_{{ choice.id }}" class="form-control" value="{{ choice.text }}" required pattern="[^<>]*" title="Special characters not allowed.">
             </div>
             {% endfor %}
 
