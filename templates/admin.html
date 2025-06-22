@@ -1,25 +1,60 @@
 {% extends "base.html" %}
 {% block title %}Admin Dashboard{% endblock %}
+
 {% block content %}
-    <div class="content-container"> 
-        <h1 class="mb-4">User Details</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Admin</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div> 
+<div class="content-container">
+    <h1>Admin Dashboard</h1>
+
+    <h2 class="mt-4">User Details</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr class="my-5">
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mt-4">Manage Quiz Questions</h2>
+        <a href="{{ url_for('auth.add_question') }}" class="btn">Add New Question</a>
+    </div>
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th style="width: 5%;">ID</th>
+                <th style="width: 70%;">Question Text</th>
+                <th style="width: 25%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.text }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('auth.edit_question', question_id=question.id) }}" class="btn-secondary">Edit</a>
+                    
+                    <form method="POST" action="{{ url_for('auth.delete_question', question_id=question.id) }}" onsubmit="return confirm('Are you sure you want to delete this question?');">
+                        <button type="submit" class="btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

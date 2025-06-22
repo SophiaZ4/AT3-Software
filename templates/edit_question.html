@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Edit Question{% endblock %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        <fieldset class="form-group">
+            <legend>Edit Question</legend>
+
+            <div class="form-group">
+                <label for="question_text">Question Text</label>
+                <textarea class="form-control" id="question_text" name="question_text" rows="3" required>{{ question.text }}</textarea>
+            </div>
+
+            <hr class="my-4">
+
+            <p><strong>Choices</strong> (Update options and select the correct one)</p>
+
+            {% for choice in question.choices|sort(attribute='id') %}
+            <div class="form-group choice-input-group">
+                <input type="radio" name="correct_choice_id" value="{{ choice.id }}" {% if choice.is_correct %}checked{% endif %} required>
+                <label for="choice_{{ choice.id }}">Choice Text</label>
+                <input type="text" id="choice_{{ choice.id }}" name="choice_text_{{ choice.id }}" class="form-control" value="{{ choice.text }}" required>
+            </div>
+            {% endfor %}
+
+        </fieldset>
+        <div class="form-group">
+            <button class="btn" type="submit">Update Question</button>
+            <a href="{{ url_for('auth.admin_dashboard') }}" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

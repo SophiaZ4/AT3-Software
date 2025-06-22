@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from . import db
-from .models import User
+from .models import User, Question, Choice
 
 auth = Blueprint('auth', __name__)
 
@@ -61,8 +61,82 @@ def admin_dashboard():
         flash('You do not have permission to access this page.', 'danger')
         return redirect(url_for('index'))
 
-    # If they are an admin, fetch all users from the database
+    # Fetch all users AND all questions
     all_users = User.query.all()
+    all_questions = Question.query.order_by(Question.id).all()
     
-    # Render the admin template, passing the user data to it
-    return render_template('admin.html', users=all_users)
+    # Pass both lists to the template
+    return render_template('admin.html', users=all_users, questions=all_questions)
+
+@auth.route('/admin/question/add', methods=['GET', 'POST'])
+@login_required
+def add_question():
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    if request.method == 'POST':
+        question_text = request.form.get('question_text')
+        choices_text = request.form.getlist('choices') # Gets a list of all choice inputs
+        correct_choice_index = int(request.form.get('correct_choice')) - 1 # (1-4) -> (0-3)
+
+        if not question_text or len(choices_text) != 4 or '' in choices_text:
+            flash('Please fill out all fields.', 'danger')
+            return redirect(url_for('auth.add_question'))
+
+        # Create the new question
+        new_question = Question(text=question_text)
+        db.session.add(new_question)
+
+        # Create the new choices
+        for i, choice_text in enumerate(choices_text):
+            is_correct = (i == correct_choice_index)
+            choice = Choice(text=choice_text, is_correct=is_correct, question=new_question)
+            db.session.add(choice)
+        
+        db.session.commit()
+        flash('New question added successfully!', 'success')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('add_question.html')
+
+@auth.route('/admin/question/edit/<int:question_id>', methods=['GET', 'POST'])
+@login_required
+def edit_question(question_id):
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+    
+    question = Question.query.get_or_404(question_id)
+
+    if request.method == 'POST':
+        question.text = request.form.get('question_text')
+        correct_choice_id = int(request.form.get('correct_choice_id'))
+
+        # Update each choice
+        for choice in question.choices:
+            choice.text = request.form.get(f'choice_text_{choice.id}')
+            choice.is_correct = (choice.id == correct_choice_id)
+            
+        db.session.commit()
+        flash('Question updated successfully!', 'success')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_question.html', question=question)
+
+@auth.route('/admin/question/delete/<int:question_id>', methods=['POST'])
+@login_required
+def delete_question(question_id):
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+        
+    question = Question.query.get_or_404(question_id)
+    
+    # Because of the 'cascade' option in our models,
+    # deleting the question will automatically delete its choices.
+    db.session.delete(question)
+    db.session.commit()
+    
+    flash('Question has been deleted.', 'success')
+    return redirect(url_for('auth.admin_dashboard'))

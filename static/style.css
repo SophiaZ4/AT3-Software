@@ -333,3 +333,75 @@ legend {
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, 0.04);
 }
+
+/* --- Add these new styles to the end of styles.css --- */
+
+/* Utility classes for layout */
+.mt-4 { margin-top: 1.5rem !important; }
+.my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+.my-4 { margin-top: 2rem !important; margin-bottom: 2rem !important; }
+.d-flex { display: flex !important; }
+.justify-content-between { justify-content: space-between !important; }
+.align-items-center { align-items: center !important; }
+
+/* Admin action button styles */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+.actions form {
+    margin: 0;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+.btn-secondary:hover {
+    background-color: #d3d9df;
+}
+
+.btn-danger {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Styles for Add/Edit Question Form */
+.choice-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.choice-input-group input[type="radio"] {
+    flex-shrink: 0;
+}
+.choice-input-group label {
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+.choice-input-group input[type="text"] {
+    flex-grow: 1;
+}
