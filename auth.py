@@ -141,3 +141,53 @@ def delete_question(question_id):
     
     flash('Question has been deleted.', 'success')
     return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/admin/user/edit/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def edit_user(user_id):
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    user_to_edit = User.query.get_or_404(user_id)
+
+    if request.method == 'POST':
+        # Sanitize username input
+        new_username = bleach.clean(request.form.get('username'))
+        
+        # Check if the new username is already taken by another user
+        existing_user = User.query.filter(User.username == new_username, User.id != user_id).first()
+        if existing_user:
+            flash('That username is already taken. Please choose another.', 'danger')
+            return render_template('edit_user.html', user=user_to_edit)
+
+        # Update username and admin status
+        user_to_edit.username = new_username
+        user_to_edit.is_admin = True if request.form.get('is_admin') else False
+        
+        db.session.commit()
+        flash('User updated successfully!', 'success')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_user.html', user=user_to_edit)
+
+
+@auth.route('/admin/user/delete/<int:user_id>', methods=['POST'])
+@login_required
+def delete_user(user_id):
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+    
+    # CRITICAL: Prevent an admin from deleting their own account
+    if user_id == current_user.id:
+        flash('You cannot delete your own account!', 'danger')
+        return redirect(url_for('auth.admin_dashboard'))
+
+    user_to_delete = User.query.get_or_404(user_id)
+    
+    db.session.delete(user_to_delete)
+    db.session.commit()
+    
+    flash(f'User {user_to_delete.username} has been deleted.', 'success')
+    return redirect(url_for('auth.admin_dashboard'))
