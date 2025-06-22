@@ -1,35 +1,26 @@
-const CACHE_NAME = 'my-flask-pwa-cache-v34';
-const urlsToCache = [
-  '/',
-  '/rules', // Add the new route
-  '/quiz',  // Add the new route
-  '/manifest.json',
-  '/sw.js',
+const CACHE_NAME = 'my-flask-pwa-cache-v36'; // Incremented version to force update
+const STATIC_ASSETS = [
+  '/', // Cache the root page for offline fallback
   '/static/style.css',
   '/static/app.js',
-  '/static/images/icon.png'
+  '/static/images/icon.png',
+  '/manifest.json'
 ];
 
-// Install event: cache core assets
+// Install event cache core static assets
 self.addEventListener('install', event => {
   console.log('Service Worker: Installing...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Service Worker: Caching app shell');
-        return cache.addAll(urlsToCache);
+        console.log('Service Worker: Caching static assets');
+        return cache.addAll(STATIC_ASSETS);
       })
-      .then(() => {
-        console.log('Service Worker: App shell cached successfully');
-        return self.skipWaiting(); // Force new SW to activate immediately
-      })
-      .catch(error => {
-        console.error('Service Worker: Failed to cache app shell:', error);
-      })
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activate event: clean up old caches
+// Activate event clean up old caches
 self.addEventListener('activate', event => {
   console.log('Service Worker: Activating...');
   event.waitUntil(
@@ -42,39 +33,32 @@ self.addEventListener('activate', event => {
           return caches.delete(cacheToDelete);
         })
       );
-    }).then(() => {
-        console.log('Service Worker: Activated successfully');
-        return self.clients.claim(); // Take control of open clients
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
-// Fetch event: serve from cache, fallback to network - contains optional console logs
+
+// CORRECTED FETCH LISTENER
 self.addEventListener('fetch', event => {
-  // console.log('Service Worker: Fetching', event.request.url);
+  // Use a Network Only strategy for all navigation requests - preventing caching redirects
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          // If the network request is successful, clone it and cache it for offline use
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-            return response;
-          })
-          .catch(() => {
-            // If the network fails, try to serve the page from the cache
-            return caches.match(event.request)
-              .then(response => response || caches.match('/')); // Fallback to cached root
-          })
-  );
-  return;
+        .catch(() => {
+          // If the network fails serves the cached root page
+          return caches.match('/');
+        })
+    );
+    return;
   }
-  // For non-navigation requests (CSS, JS, images), use the Cache First strategy
+
+  // For non-navigation requests use a Cache first strategy.
+  // This serves assets quickly from the cache if they exist.
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then(cachedResponse => {
+        // Return the cached response if found, otherwise go to the network
+        return cachedResponse || fetch(event.request);
+      })
   );
 });
