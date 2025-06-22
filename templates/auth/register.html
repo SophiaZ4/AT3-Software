@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
+{% block auth_links %}
+    <li><a href="{{ url_for('auth.signin') }}">Login</a></li>
+{% endblock %}
 {% block content %}
     <div class="content-section">
         <form method="POST" action="">
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+                <legend class="border-bottom mb-4">Register Now</legend>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username" required>
@@ -18,10 +21,11 @@
                 <button class="btn btn-outline-info" type="submit">Sign Up</button>
             </div>
         </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{{ url_for('auth.signin') }}">Log In</a>
+            </small>
+        </div>
     </div>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Already Have An Account? <a class="ml-2" href="{{ url_for('auth.signin') }}">Log In</a>
-        </small>
-    </div>
+    
 {% endblock %}

@@ -27,7 +27,10 @@
                     <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
 
                 {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    {% block auth_links %}
+                        <li><a href="{{ url_for('auth.signin') }}">Login</a></li>
+                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    {% endblock %}
                 {% endif %}
             </ul>
         </nav>
