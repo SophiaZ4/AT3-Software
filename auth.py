@@ -50,3 +50,19 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('auth.signin'))
+
+# --- Add this code to the bottom of auth.py ---
+
+@auth.route('/admin')
+@login_required
+def admin_dashboard():
+    # First, check if the logged-in user is actually an admin
+    if not current_user.is_admin:
+        flash('You do not have permission to access this page.', 'danger')
+        return redirect(url_for('index'))
+
+    # If they are an admin, fetch all users from the database
+    all_users = User.query.all()
+    
+    # Render the admin template, passing the user data to it
+    return render_template('admin.html', users=all_users)

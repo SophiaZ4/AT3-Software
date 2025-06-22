@@ -15,9 +15,14 @@ def create_app(test_config=None):
     # --- CONFIGURATION ---
     app.config.from_mapping(
         SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(app.instance_path, 'users.db'),
+        SQLALCHEMY_DATABASE_URI='sqlite:////Users/sophiazammit/HSCAT3/instance/users.db',
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
+
+    # --- ADD THESE TWO LINES FOR DEBUGGING ---
+    print(f"Flask Instance Path: {app.instance_path}")
+    print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
+    # -----------------------------------------
 
     try:
         os.makedirs(app.instance_path)
