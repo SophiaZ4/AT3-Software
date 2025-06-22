@@ -19,7 +19,7 @@
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('rules') }}">Positions</a></li>
-                    <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
+                    <li><a href="{{ url_for('quiz.take_quiz') }}">Quiz</a></li>
                     
                     {% if current_user.is_admin %}
                         <li><a href="{{ url_for('auth.admin_dashboard') }}">Admin</a></li> {% endif %}

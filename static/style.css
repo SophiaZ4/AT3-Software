@@ -1,15 +1,16 @@
 body {
     font-family: sans-serif;
     margin: 0; /* Reset margin for full-width header */
+    background-color: #fff; /* Set a default background */
 }
 
 h1 {
     color: #007bff;
-    padding: 0 20px; /* Add padding to content */
+    /* Removed padding from here to be handled by containers */
 }
 
 p {
-    padding: 0 20px; /* Add padding to content */
+    /* Removed padding from here to be handled by containers */
 }
 
 
@@ -50,14 +51,18 @@ p {
     color: #0056b3;
 }
 
-.content-container {
+/* Main content wrapper for consistent padding and width */
+.content-container,
+.quiz-container,
+.quiz-result-container {
     max-width: 900px;
-    margin: 40px auto; /* Center the content and add space from header */
+    margin: 40px auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .rule-section {
-    margin-bottom: 50px; /* Space between rule sections */
+    margin-bottom: 50px;
     border-bottom: 1px solid #eee;
     padding-bottom: 30px;
 }
@@ -73,18 +78,15 @@ p {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 20px;
-    background-color: #eee; /* Shows a placeholder color while video loads */
+    background-color: #eee;
 }
 
-
-/* For the footwork video */
 .footwork-video-position {
-    object-position: 100%; /* or try '50% 100%' */
+    object-position: 100%;
 }
 
-/* For the contact image */
 .contact-image-position {
-    object-position: bottom center; /* or try '100% 100%' */
+    object-position: bottom center;
 }
 
 .rule-section h2 {
@@ -109,16 +111,13 @@ p {
     padding-left: 20px;
 }
 
-/* --- Styles for Interactive Court --- */
-
-/* Highlight color for the SVG areas */
+/* Styles for Interactive Court */
 .highlighted-area {
-    fill: #007bff !important; /* Use !important to override inline SVG styles */
+    fill: #007bff !important;
     opacity: 0.7;
     transition: fill 0.2s ease-in-out;
 }
 
-/* Container for the position buttons */
 .position-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -143,17 +142,15 @@ p {
     background-color: #0056b3;
 }
 
-/* NEW Info Panel Styles */
 #position-info-panel {
     background: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 8px;
     padding: 25px;
     margin-top: 30px;
-    min-height: 150px; /* Prevents layout shifts */
+    min-height: 150px;
 }
 
-/* Hides the panel until a button is clicked */
 .info-panel-hidden {
     display: none;
 }
@@ -179,18 +176,17 @@ p {
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-    float: right; /* Places it in the top right */
+    float: right;
 }
 
-/* Container for messages to center them and add some space */
+/* Container for messages */
 .messages-container {
     width: 80%;
     max-width: 900px;
-    margin: 1rem auto; /* Adds space above/below and centers horizontally */
+    margin: 1rem auto;
     padding: 0;
 }
 
-/* Base alert styling */
 .alert {
     padding: 15px;
     margin-bottom: 20px;
@@ -201,14 +197,145 @@ p {
     text-align: center;
 }
 
-/* Style for danger/error messages */
 .alert-danger {
-    background-color: #dc3545; /* A standard red color */
+    background-color: #dc3545;
     border-color: #d32535;
 }
 
-/* Style for success messages */
 .alert-success {
-    background-color: #28a745; /* A standard green color */
+    background-color: #28a745;
     border-color: #23923d;
+}
+
+/* Quiz Styles */
+.question-block {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.question-block h2 {
+    margin-top: 0;
+    font-size: 1.4em;
+    color: #333;
+}
+
+.choices .choice {
+    margin-bottom: 10px;
+}
+
+.choices .choice label {
+    margin-left: 8px;
+    font-size: 1.1em;
+}
+
+.button-primary,
+.btn { /* Apply same style to .btn class used in forms */
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button-primary:hover,
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.result-card {
+    background-color: #e9f5ff;
+    border: 1px solid #b3d7ff;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.result-card h2 {
+    color: #0056b3;
+    margin-top: 0;
+}
+
+.result-card p {
+    color: #333;
+}
+
+/* --- NEW: Form & Auth Page Styles --- */
+.content-section {
+    background: #fdfdfd;
+    padding: 20px 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 40px auto;
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+legend {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e3e3e3;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Important for padding and width */
+}
+
+.border-top {
+    border-top: 1px solid #e3e3e3;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+
+/* --- NEW: Admin Table Styles --- */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background-color: #fff;
+}
+
+.table th,
+.table td {
+    padding: 0.9rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 1.1em;
+}
+
+/* This creates the stripped effect for the admin table */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.04);
 }

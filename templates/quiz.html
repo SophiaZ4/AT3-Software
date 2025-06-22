@@ -3,6 +3,29 @@
 {% block title %}Quiz - MyNetball PWA{% endblock %}
 
 {% block content %}
-    <h1>Netball Quiz</h1>
-    <p>This is where the interactive quiz will be.</p>
+<div class="quiz-container">
+    h1>Netball Quiz</h1>
+
+    {% if questions %}
+        <p>Test your knowledge of the rules of netball.</p>
+        <form action="{{ url_for('quiz.take_quiz') }}" method="POST">
+            {% for question in questions %}
+            <div class="question-block">
+                <h2>Question {{ loop.index }}: {{ question.text }}</h2>
+                <div class="choices">
+                    {% for choice in question.choices %}
+                    <div class="choice">
+                        <input type="radio" name="question_{{ question.id }}" id="choice_{{ choice.id }}" value="{{ choice.id }}" required>
+                        <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="button-primary">Submit Answers</button>
+        </form>
+    {% else %}
+        <p>There are no questions in the quiz at the moment. Please check back later!</p>
+    {% endif %}
+</div>
 {% endblock %}

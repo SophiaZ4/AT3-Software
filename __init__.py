@@ -19,10 +19,9 @@ def create_app(test_config=None):
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
-    # --- ADD THESE TWO LINES FOR DEBUGGING ---
+    # lines for debugging
     print(f"Flask Instance Path: {app.instance_path}")
     print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
-    # -----------------------------------------
 
     try:
         os.makedirs(app.instance_path)
@@ -34,10 +33,13 @@ def create_app(test_config=None):
     login_manager.init_app(app)
     login_manager.login_view = 'auth.signin'
 
+    from .quiz import quiz_bp # Import quiz
+    app.register_blueprint(quiz_bp)
+
     # Import blueprints
     from . import auth
     app.register_blueprint(auth.auth)
-    
+
     # Import models
     from . import models
 
@@ -64,10 +66,7 @@ def create_app(test_config=None):
     def rules():
         return render_template('rules.html')
 
-    @app.route('/quiz')
-    @login_required
-    def quiz():
-        return render_template('quiz.html')
+    #@app.route('/quiz') @login_required def quiz(): return render_template('quiz.html') OLD QUIZ PAGE
     
     # --- PWA Routes (THE FIX IS HERE) ---
     @app.route('/manifest.json')

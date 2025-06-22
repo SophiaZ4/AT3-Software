@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Result{% endblock %}
+
+{% block content %}
+<div class="quiz-result-container">
+    <h1>Your Previous Quiz Result</h1>
+    
+    {% if result %}
+        <p>You have already taken the quiz. Here is your most recent score:</p>
+        <div class="result-card">
+            <h2>Score: {{ result.score }} / {{ result.total_questions }}</h2>
+            <p>Taken on: {{ result.timestamp.strftime('%d %B %Y at %I:%M %p') }}</p>
+        </div>
+        <a href="{{ url_for('quiz.take_quiz', retry='true') }}" class="button-primary">Retry Quiz</a>
+    {% else %}
+        <p>You haven't taken the quiz yet.</p>
+        <a href="{{ url_for('quiz.take_quiz') }}" class="button-primary">Take the Quiz!</a>
+    {% endif %}
+</div>
+{% endblock %}
