@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-flask-pwa-cache-v17';
+const CACHE_NAME = 'my-flask-pwa-cache-v22';
 const urlsToCache = [
   '/',
   '/rules', // Add the new route
@@ -52,22 +52,29 @@ self.addEventListener('activate', event => {
 // Fetch event: serve from cache, fallback to network - contains optional console logs
 self.addEventListener('fetch', event => {
   // console.log('Service Worker: Fetching', event.request.url);
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // If the network request is successful, clone it and cache it for offline use
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+            return response;
+          })
+          .catch(() => {
+            // If the network fails, try to serve the page from the cache
+            return caches.match(event.request)
+              .then(response => response || caches.match('/')); // Fallback to cached root
+          })
+  );
+  return;
+  }
+  // For non-navigation requests (CSS, JS, images), use the Cache First strategy
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          // console.log('Service Worker: Found in cache', event.request.url);
-          return response; // Serve from cache
-        }
-        // console.log('Service Worker: Not in cache, fetching from network', event.request.url);
-        return fetch(event.request); // Fetch from network
-        // Optional: Add logic here to cache new requests dynamically if needed
-      })
-      .catch(error => {
-        console.error('Service Worker: Error fetching data', error);
-        // might want to return a custom offline fallback page here
-        // if (!event.request.url.startsWith('http')) return; // Skip non-http requests
-        // return caches.match('/offline.html'); // Example: serve an offline.html page
-      })
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });

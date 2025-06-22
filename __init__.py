@@ -1,7 +1,9 @@
 import os
 from flask import Flask, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, current_user
+from flask import redirect, url_for # Make sure redirect and url_for are imported
+
 
 # Create the extension instances here, once and only once
 db = SQLAlchemy()
@@ -47,10 +49,13 @@ def create_app(test_config=None):
 
     # --- MAIN ROUTES ---
     @app.route('/')
+    @login_required
     def index():
+        # If the user is already logged in, take them to the new /home page
         return render_template('index.html')
 
     @app.route('/rules')
+    @login_required
     def rules():
         return render_template('rules.html')
 

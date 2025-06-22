@@ -181,3 +181,34 @@ p {
     cursor: pointer;
     float: right; /* Places it in the top right */
 }
+
+/* Container for messages to center them and add some space */
+.messages-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 1rem auto; /* Adds space above/below and centers horizontally */
+    padding: 0;
+}
+
+/* Base alert styling */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Style for danger/error messages */
+.alert-danger {
+    background-color: #dc3545; /* A standard red color */
+    border-color: #d32535;
+}
+
+/* Style for success messages */
+.alert-success {
+    background-color: #28a745; /* A standard green color */
+    border-color: #23923d;
+}
