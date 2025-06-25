@@ -1,9 +1,9 @@
-const CACHE_NAME = 'my-flask-pwa-cache-v36'; // Incremented version to force update
+const CACHE_NAME = 'my-flask-pwa-cache-v49'; // Incremented version to force update
 const STATIC_ASSETS = [
   '/', // Cache the root page for offline fallback
   '/static/style.css',
   '/static/app.js',
-  '/static/images/icon.png',
+  '/static/images/icon.webp',
   '/manifest.json'
 ];
 

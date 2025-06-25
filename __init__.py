@@ -2,7 +2,9 @@ import os
 from flask import Flask, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, current_user
-from flask import redirect, url_for # Make sure redirect and url_for are imported
+from flask import redirect, url_for
+from flask_minify import Minify 
+from flask_compress import Compress
 
 
 # Create the extension instances here, once and only once
@@ -11,6 +13,8 @@ login_manager = LoginManager()
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    
+    Compress(app)
 
     # --- CONFIGURATION ---
     app.config.from_mapping(
@@ -32,6 +36,8 @@ def create_app(test_config=None):
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.signin'
+    
+    Minify(app=app, html=True, js=True, cssless=True) # Optimisation by minifying files
 
     from .quiz import quiz_bp # Import quiz
     app.register_blueprint(quiz_bp)

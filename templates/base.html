@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An educational PWA for learning the rules, positions, and strategies of Netball.">
     <title>{% block title %}MyNetball PWA{% endblock %}</title>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#000000"/>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.webp') }}" type="image/webp">
 </head>
 <body>
     <header class="main-header">
         <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="MyNetball Logo" class="logo">
+            <img src="{{ url_for('static', filename='images/icon.webp') }}" alt="MyNetball Logo" class="logo" width="50" height="50">
         </div>
         <nav class="main-nav">
             <ul class="nav-links">
@@ -52,7 +54,7 @@
 
     {% block content %}{% endblock %}
 
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
     
     {% block scripts %}{% endblock %}
 </body>
