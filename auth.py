@@ -52,8 +52,6 @@ def logout():
     logout_user()
     return redirect(url_for('auth.signin'))
 
-# --- Add this code to the bottom of auth.py ---
-
 @auth.route('/admin')
 @login_required
 def admin_dashboard():
@@ -134,8 +132,7 @@ def delete_question(question_id):
         
     question = Question.query.get_or_404(question_id)
     
-    # Because of the 'cascade' option in our models,
-    # deleting the question will automatically delete its choices.
+    # Because of the 'cascade' option in models - deleting the question will automatically delete its choices.
     db.session.delete(question)
     db.session.commit()
     
